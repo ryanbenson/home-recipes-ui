@@ -1,5 +1,5 @@
 <template>
-  <div class="ingredient">
+  <div class="ingredient mb-3">
     <div class="field is-grouped">
       <div class="control control--quantity">
         <input
@@ -19,7 +19,7 @@
           class="input"
         />
       </div>
-      <div class="control control--name">
+      <div class="control is-expanded control--name">
         <input
           v-model="name"
           type="text"
@@ -29,7 +29,7 @@
         />
       </div>
       <div class="control control--remove">
-        <button class="button is-danger">
+        <button class="button is-danger" @click="removeIngredient">
           <span class="icon is-small">
             <i class="fas fa-trash-alt"></i>
           </span>
@@ -43,9 +43,9 @@
 import { ref, watchEffect } from "vue";
 export default {
   props: {
-    index: Number,
+    k: String,
   },
-  emits: ["ingredient:update"],
+  emits: ["ingredient:update", "ingredient:remove"],
   setup(props, { emit }) {
     const measurement = ref(null);
     const name = ref(null);
@@ -53,17 +53,24 @@ export default {
 
     watchEffect(() => {
       emit("ingredient:update", {
-        index: props.index,
+        key: props.k,
         measurement: measurement.value,
         name: name.value,
-        quantitye: quantity.value,
+        quantity: quantity.value,
       });
     });
+
+    function removeIngredient() {
+      emit("ingredient:remove", {
+        key: props.k,
+      });
+    }
 
     return {
       measurement,
       name,
       quantity,
+      removeIngredient,
     };
   },
 };
