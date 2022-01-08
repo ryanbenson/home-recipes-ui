@@ -1,31 +1,40 @@
 <template>
   <div class="ingredient">
-    <div class="row">
-      <label for="name">quantity</label>
-      <input
-        v-model="quantity"
-        type="number"
-        name="quantity"
-        placeholder="How many"
-      />
-    </div>
-    <div class="row">
-      <label for="measurement">Measurement</label>
-      <input
-        v-model="measurement"
-        type="text"
-        name="measurement"
-        placeholder="Recipe name"
-      />
-    </div>
-    <div class="row">
-      <label for="name">Name</label>
-      <input
-        v-model="name"
-        type="text"
-        name="name"
-        placeholder="Ingredient name"
-      />
+    <div class="field is-grouped">
+      <div class="control control--quantity">
+        <input
+          v-model="quantity"
+          type="number"
+          name="quantity"
+          placeholder="How many"
+          class="input"
+        />
+      </div>
+      <div class="control control--measurement">
+        <input
+          v-model="measurement"
+          type="text"
+          name="measurement"
+          placeholder="Measurement"
+          class="input"
+        />
+      </div>
+      <div class="control control--name">
+        <input
+          v-model="name"
+          type="text"
+          name="name"
+          placeholder="Ingredient name"
+          class="input"
+        />
+      </div>
+      <div class="control control--remove">
+        <button class="button is-danger">
+          <span class="icon is-small">
+            <i class="fas fa-trash-alt"></i>
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -59,3 +68,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.control--quantity {
+  max-width: 60px;
+}
+</style>
