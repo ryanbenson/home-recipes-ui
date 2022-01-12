@@ -78,6 +78,8 @@
 import { ref, reactive, toRefs } from "vue";
 import Ingredient from "@/components/create/Ingredient";
 import Step from "@/components/create/Step";
+import axios from "axios";
+
 export default {
   props: {},
   components: {
@@ -110,14 +112,27 @@ export default {
       });
     }
 
-    function onSubmit() {
-      // submit to backend or whatever you like
-      console.log(
-        name.value,
-        description.value,
-        state.ingredients,
-        state.steps
-      );
+    async function onSubmit() {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/recipe/create",
+          {
+            name: name.value,
+            description: description.value,
+            ingredients: state.ingredients.map((i) => {
+              return {
+                name: i.name,
+                measurement: i.measurement,
+                quantity: i.quantity,
+              };
+            }),
+            steps: state.steps.map((s) => s.details),
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     function onIngredientUpdate(data) {
